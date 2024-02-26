@@ -1,4 +1,4 @@
-package pl.lotto.numberreceiver;
+package pl.lotto.drawdate;
 
 import java.time.Clock;
 import java.time.DayOfWeek;

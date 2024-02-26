@@ -1,19 +1,17 @@
 package pl.lotto.numberreceiver;
 
 import lombok.AllArgsConstructor;
+import pl.lotto.drawdate.DrawDateFacade;
 import pl.lotto.numberreceiver.dto.NumberReceiverResponseDto;
 import pl.lotto.numberreceiver.dto.TicketDto;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static pl.lotto.numberreceiver.ValidationResult.SUCCESS;
-import static pl.lotto.numberreceiver.dto.NumberReceiverResponseDto.*;
 
 // zwraca date losowania
 // zwraca wygrane po dacie losowania
@@ -21,7 +19,7 @@ import static pl.lotto.numberreceiver.dto.NumberReceiverResponseDto.*;
 public class NumberReceiverFacade {
 
     private final NumberValidator validator;
-    private final DrawDateGenerator drawDateGenerator;
+    private final DrawDateFacade drawDateFacade;
     private final HashGenerable hashGenerator;
     private final TicketRepository ticketRepository;
 
@@ -33,7 +31,7 @@ public class NumberReceiverFacade {
         }
         String hash = hashGenerator.getHash();
 
-        LocalDateTime drawDate = drawDateGenerator.getNextDrawDate();
+        LocalDateTime drawDate = drawDateFacade.getNextDrawDate().drawDate();
 
         TicketDto generatedTicket = TicketDto
                 .builder()
@@ -55,12 +53,12 @@ public class NumberReceiverFacade {
     }
 
     public List<TicketDto> retrieveAllTicketByNextDrawDate(){
-        LocalDateTime nextDrawDate = drawDateGenerator.getNextDrawDate();
+        LocalDateTime nextDrawDate = drawDateFacade.getNextDrawDate().drawDate();
         return retrieveAllTicketByNextDrawDate(nextDrawDate);
     }
 
     public List<TicketDto> retrieveAllTicketByNextDrawDate(LocalDateTime date){
-        LocalDateTime nextDrawDate = drawDateGenerator.getNextDrawDate();
+        LocalDateTime nextDrawDate = drawDateFacade.getNextDrawDate().drawDate();
         if(date.isAfter(nextDrawDate)){
             return Collections.emptyList();
         }
@@ -77,7 +75,7 @@ public class NumberReceiverFacade {
     }
 
     public LocalDateTime retrieveNextDrawDate(){
-        return drawDateGenerator.getNextDrawDate();
+        return drawDateFacade.getNextDrawDate().drawDate();
     }
 
     public TicketDto findByHash(String hash){
