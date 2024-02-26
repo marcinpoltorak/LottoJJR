@@ -6,7 +6,6 @@ import pl.lotto.numberreceiver.dto.NumberReceiverResponseDto;
 import pl.lotto.numberreceiver.dto.TicketDto;
 
 import java.time.*;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,14 +21,12 @@ class NumberReceiverFacadeTest {
         HashGenerable hashGenerator = new HashGeneratorTestImpl();
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
         Set<Integer> numbersFromUser = Set.of(1,2,3,4,5,6);
-        DrawDateGenerator drawDateGenerator = new DrawDateGenerator(clock);
-        LocalDateTime drawDate = drawDateGenerator.getNextDrawDate();
 
         TicketDto generatedTicket = TicketDto
                 .builder()
                 .hash(hashGenerator.getHash())
                 .numbers(numbersFromUser)
-                .drawDate(drawDate)
+                .drawDate(numberReceiverFacade.retrieveNextDrawDate())
                 .build();
         // when
         NumberReceiverResponseDto response = numberReceiverFacade.inputNumbers(numbersFromUser);
