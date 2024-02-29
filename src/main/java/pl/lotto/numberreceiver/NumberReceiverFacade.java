@@ -31,7 +31,7 @@ public class NumberReceiverFacade {
         }
         String hash = hashGenerator.getHash();
 
-        LocalDateTime drawDate = drawDateFacade.getNextDrawDate().drawDate();
+        LocalDateTime drawDate = drawDateFacade.retrieveNextDrawDate();
 
         TicketDto generatedTicket = TicketDto
                 .builder()
@@ -53,12 +53,12 @@ public class NumberReceiverFacade {
     }
 
     public List<TicketDto> retrieveAllTicketByNextDrawDate(){
-        LocalDateTime nextDrawDate = drawDateFacade.getNextDrawDate().drawDate();
+        LocalDateTime nextDrawDate = drawDateFacade.retrieveNextDrawDate();
         return retrieveAllTicketByNextDrawDate(nextDrawDate);
     }
 
     public List<TicketDto> retrieveAllTicketByNextDrawDate(LocalDateTime date){
-        LocalDateTime nextDrawDate = drawDateFacade.getNextDrawDate().drawDate();
+        LocalDateTime nextDrawDate = drawDateFacade.retrieveNextDrawDate();
         if(date.isAfter(nextDrawDate)){
             return Collections.emptyList();
         }
@@ -75,7 +75,7 @@ public class NumberReceiverFacade {
     }
 
     public LocalDateTime retrieveNextDrawDate(){
-        return drawDateFacade.getNextDrawDate().drawDate();
+        return drawDateFacade.retrieveNextDrawDate();
     }
 
     public TicketDto findByHash(String hash){
