@@ -1,18 +1,14 @@
 package pl.lotto.drawdate;
 
 import lombok.AllArgsConstructor;
-import pl.lotto.drawdate.dto.DrawDateResponseDto;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 public class DrawDateFacade {
     private final DrawDateGenerator drawDateGenerator;
 
-    public DrawDateResponseDto getNextDrawDate(){
-        return DrawDateResponseDto
-                .builder()
-                .drawDate(
-                        drawDateGenerator.getNextDrawDate()
-                )
-                .build();
+    public LocalDateTime retrieveNextDrawDate(){
+        return drawDateGenerator.getNextDrawDate();
     }
 }
