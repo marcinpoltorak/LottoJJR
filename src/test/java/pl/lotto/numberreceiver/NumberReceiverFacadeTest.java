@@ -164,7 +164,7 @@ class NumberReceiverFacadeTest {
         TicketDto ticketDto = numberReceiverResponseDto.ticketDto();
         TicketDto ticketDto1 = numberReceiverResponseDto1.ticketDto();
         // when
-        List<TicketDto> ticketDtosByDrawDate = numberReceiverFacade.retrieveAllTicketByNextDrawDate(drawDate);
+        List<TicketDto> ticketDtosByDrawDate = numberReceiverFacade.retrieveAllTicketsByNextDrawDate(drawDate);
         // then
         assertThat(ticketDtosByDrawDate).containsOnly(ticketDto, ticketDto1);
     }
@@ -176,7 +176,7 @@ class NumberReceiverFacadeTest {
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
 
         // when
-        List<TicketDto> ticketDtoList = numberReceiverFacade.retrieveAllTicketByNextDrawDate();
+        List<TicketDto> ticketDtoList = numberReceiverFacade.retrieveAllTicketsByNextDrawDate();
         // then
         assertThat(ticketDtoList).isEmpty();
     }
@@ -189,7 +189,7 @@ class NumberReceiverFacadeTest {
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
         LocalDateTime drawDate = numberReceiverFacade.inputNumbers(Set.of(1, 2, 3, 4, 5, 6)).ticketDto().drawDate();
         // when
-        List<TicketDto> ticketDtoList = numberReceiverFacade.retrieveAllTicketByNextDrawDate(drawDate.plusWeeks(1L));
+        List<TicketDto> ticketDtoList = numberReceiverFacade.retrieveAllTicketsByNextDrawDate(drawDate.plusWeeks(1L));
         // then
         assertThat(ticketDtoList).isEmpty();
     }
