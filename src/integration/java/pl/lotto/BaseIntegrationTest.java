@@ -30,7 +30,7 @@ public class BaseIntegrationTest {
     public MockMvc mockMvc;
 
     @Container
-    public static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongodb:4.0.10"));
+    public static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
 
     @Autowired
     public ObjectMapper objectMapper;
