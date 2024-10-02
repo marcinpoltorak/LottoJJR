@@ -16,7 +16,7 @@ public class WinningNumbersGeneratorFacade {
 
     public WinningNumbersDto generateWinningNumbers(){
         LocalDateTime drawDate = drawDateFacade.retrieveNextDrawDate();
-        Set<Integer> winningNumbers = winningNumbersGenerator.generateSixRandomNumbers();
+        Set<Integer> winningNumbers = winningNumbersGenerator.generateSixRandomNumbers().numbers();
         winningNumbersValidator.validate(winningNumbers);
         winningNumbersRepository.save(WinningNumbers.builder()
                 .winningNumbers(winningNumbers)
