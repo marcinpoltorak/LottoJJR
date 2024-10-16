@@ -11,7 +11,7 @@ public class WinningNumbersGenerator implements WinningNumbersGenerable{
     private final int UPPER_BAND = 99;
     private final OneRandomNumberFetcher client;
     @Override
-    public SixRandomNumbersDto generateSixRandomNumbers() {
+    public SixRandomNumbersDto generateSixRandomNumbers(int lowerBand, int upperBand, int count) {
         Set<Integer> randomNumbers = new HashSet<>();
         while(isAmountOfNumbersLowerThanSix(randomNumbers)){
             OneRandomNumberResponseDto randomNumberResponseDto = client.retrieveOneRandomNumber(LOWER_BAND, UPPER_BAND);

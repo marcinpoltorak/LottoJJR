@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import pl.lotto.domain.TestRepository;
 import pl.lotto.domain.Ticket;
+import pl.lotto.domain.numbergenerator.WinningNumbersGeneratorFacadeConfigurationProperties;
+import pl.lotto.infrastructure.numbergenerator.http.RandomNumberGeneratorRestTemplateConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties({WinningNumbersGeneratorFacadeConfigurationProperties.class, RandomNumberGeneratorRestTemplateConfigurationProperties.class})
 public class LottoSpringBootApplication implements CommandLineRunner {
 
     @Autowired
