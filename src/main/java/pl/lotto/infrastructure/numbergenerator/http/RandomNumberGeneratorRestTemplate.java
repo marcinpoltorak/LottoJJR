@@ -1,21 +1,26 @@
 package pl.lotto.infrastructure.numbergenerator.http;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.lotto.domain.numbergenerator.SixRandomNumbersDto;
 import pl.lotto.domain.numbergenerator.WinningNumbersGenerable;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Log4j2
 public class RandomNumberGeneratorRestTemplate implements WinningNumbersGenerable {
 
     private final RestTemplate restTemplate;
@@ -23,22 +28,46 @@ public class RandomNumberGeneratorRestTemplate implements WinningNumbersGenerabl
     private final int port;
 
     @Override
-    public SixRandomNumbersDto generateSixRandomNumbers() {
-        String urlForService = getUrlForService("/api/v1.0/randomnumber");
+    public SixRandomNumbersDto generateSixRandomNumbers(int lowerBand, int upperBand, int count) {
+        log.info("Started fetching winning numbers using http client");
         HttpHeaders headers = new HttpHeaders();
         final HttpEntity<HttpHeaders> requestEntity = new HttpEntity<>(headers);
-        ResponseEntity<List<Integer>> response = restTemplate.exchange(
-                UriComponentsBuilder.fromHttpUrl(urlForService)
-                        .queryParam("min", 1)
-                        .queryParam("max", 99)
-                        .queryParam("count", 6)
+        try {
+            final ResponseEntity<List<Integer>> response = makeGetRequest(lowerBand, upperBand, count, requestEntity);
+            Set<Integer> sixDistinctNumbers = getSixDistinctNumbers(response);
+            if(sixDistinctNumbers.size() != 6){
+                log.error("Set is less than: {} Have to request one more time", count);
+                return generateSixRandomNumbers(lowerBand, upperBand, count);
+            }
+            return SixRandomNumbersDto.builder().numbers(sixDistinctNumbers).build();
+        } catch (ResourceAccessException e){
+            log.error("Error while fetching winning numbers using http client: " + e.getMessage());
+            return SixRandomNumbersDto.builder().build();
+        }
+    }
+
+    private Set<Integer> getSixDistinctNumbers(ResponseEntity<List<Integer>> response) {
+        List<Integer> numbers = response.getBody();
+        if(numbers == null) {
+            log.error("Response numbers was null returning empty collection");
+            return Collections.emptySet();
+        }
+        log.info("Success Response Body Returned: " + response);
+        Set<Integer> distinctNumbers = new HashSet<>(numbers);
+        return distinctNumbers.stream().limit(6).collect(Collectors.toSet());
+    }
+
+    private ResponseEntity<List<Integer>> makeGetRequest(int lowerBand, int upperBand, int count, HttpEntity<HttpHeaders> requestEntity) {
+        return restTemplate.exchange(
+                UriComponentsBuilder.fromHttpUrl(getUrlForService("/api/v1.0/randomnumber"))
+                        .queryParam("min", lowerBand)
+                        .queryParam("max", upperBand)
+                        .queryParam("count", count)
                         .toUriString(),
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
-        System.out.println(response.getBody());
-        return SixRandomNumbersDto.builder().numbers(response.getBody().stream().collect(Collectors.toSet())).build();
     }
 
     private String getUrlForService(String service) {

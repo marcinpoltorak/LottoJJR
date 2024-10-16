@@ -13,10 +13,11 @@ public class WinningNumbersGeneratorFacade {
     private final WinningNumbersValidator winningNumbersValidator;
     private final WinningNumbersRepository winningNumbersRepository;
     private final DrawDateFacade drawDateFacade;
+    private final WinningNumbersGeneratorFacadeConfigurationProperties properties;
 
     public WinningNumbersDto generateWinningNumbers(){
         LocalDateTime drawDate = drawDateFacade.retrieveNextDrawDate();
-        Set<Integer> winningNumbers = winningNumbersGenerator.generateSixRandomNumbers().numbers();
+        Set<Integer> winningNumbers = winningNumbersGenerator.generateSixRandomNumbers(properties.lowerBand(), properties.upperBand(), properties.count()).numbers();
         winningNumbersValidator.validate(winningNumbers);
         winningNumbersRepository.save(WinningNumbers.builder()
                 .winningNumbers(winningNumbers)

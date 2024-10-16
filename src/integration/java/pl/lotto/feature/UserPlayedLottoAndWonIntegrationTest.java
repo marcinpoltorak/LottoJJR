@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import pl.lotto.BaseIntegrationTest;
 import pl.lotto.domain.numbergenerator.SixRandomNumbersDto;
 import pl.lotto.domain.numbergenerator.WinningNumbersGenerable;
+import pl.lotto.domain.numbergenerator.WinningNumbersGeneratorFacade;
+import pl.lotto.domain.numbergenerator.dto.WinningNumbersDto;
 
 public class UserPlayedLottoAndWonIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
-    WinningNumbersGenerable winningNumbersGenerable;
+    WinningNumbersGeneratorFacade winningNumbersGeneratorFacade;
 
     @Test
     public void should_user_win_and_system_should_generate_winners(){
@@ -26,7 +28,8 @@ public class UserPlayedLottoAndWonIntegrationTest extends BaseIntegrationTest {
                                 """.trim()
                         )));
         //when
-        SixRandomNumbersDto sixRandomNumbersDto = winningNumbersGenerable.generateSixRandomNumbers();
+        WinningNumbersDto winningNumbersDto = winningNumbersGeneratorFacade.generateWinningNumbers();
+        winningNumbersDto.getWinningNumbers();
         //then
         //step 2: system fetched winning numbers for draw date: 19.11.2022 12:00
         //step 3: user made POST /inputNumbers with 6 numbers (1, 2, 3, 4, 5, 6) at 16-11-2022 10:00 and system returned OK(200) with message: “success” and Ticket (DrawDate:19.11.2022 12:00 (Saturday), TicketId: sampleTicketId)
