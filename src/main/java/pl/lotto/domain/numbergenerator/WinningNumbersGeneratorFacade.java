@@ -19,22 +19,23 @@ public class WinningNumbersGeneratorFacade {
         LocalDateTime drawDate = drawDateFacade.retrieveNextDrawDate();
         Set<Integer> winningNumbers = winningNumbersGenerator.generateSixRandomNumbers(properties.lowerBand(), properties.upperBand(), properties.count()).numbers();
         winningNumbersValidator.validate(winningNumbers);
-//        winningNumbersRepository.save(WinningNumbers.builder()
-//                .winningNumbers(winningNumbers)
-//                .drawDate(drawDate)
-//                .build());
-        return WinningNumbersDto.builder()
+        WinningNumbers winningNumbersDocument = WinningNumbers.builder()
                 .winningNumbers(winningNumbers)
                 .date(drawDate)
+                .build();
+        WinningNumbers save = winningNumbersRepository.save(winningNumbersDocument);
+        return WinningNumbersDto.builder()
+                .winningNumbers(save.winningNumbers())
+                .date(save.date())
                 .build();
     }
 
     public WinningNumbersDto retrieveWinningNumbersByDate(LocalDateTime date){
-        WinningNumbers winningNumbers = winningNumbersRepository.findNumbersByDate(date)
+        WinningNumbers winningNumbers = winningNumbersRepository.findWinningNumbersByDate(date)
                 .orElseThrow(() -> new WinningNumbersNotFoundException("Not Found"));
         return WinningNumbersDto.builder()
                 .winningNumbers(winningNumbers.winningNumbers())
-                .date(winningNumbers.drawDate())
+                .date(winningNumbers.date())
                 .build();
     }
 

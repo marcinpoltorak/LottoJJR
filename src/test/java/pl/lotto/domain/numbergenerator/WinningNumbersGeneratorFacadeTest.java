@@ -81,7 +81,7 @@ class WinningNumbersGeneratorFacadeTest {
         WinningNumbers winningNumbers = WinningNumbers.builder()
                 .id(id)
                 .winningNumbers(generatedWinningNumbers)
-                .drawDate(drawDate)
+                .date(drawDate)
                 .build();
         winningNumbersRepository.save(winningNumbers);
         when(drawDateFacade.retrieveNextDrawDate()).thenReturn(drawDate);

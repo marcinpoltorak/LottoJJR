@@ -13,26 +13,6 @@ import java.util.Optional;
 public class NumberGeneratorConfiguration {
 
     @Bean
-    WinningNumbersRepository repository(){
-        return new WinningNumbersRepository() {
-            @Override
-            public Optional<WinningNumbers> findNumbersByDate(LocalDateTime date) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsByDate(LocalDateTime date) {
-                return false;
-            }
-
-            @Override
-            public WinningNumbers save(WinningNumbers winningNumbers) {
-                return null;
-            }
-        };
-    }
-
-    @Bean
     DrawDateFacade drawDateFacade(){
         return new DrawDateFacade(new DrawDateGenerator(Clock.systemUTC()));
     }
