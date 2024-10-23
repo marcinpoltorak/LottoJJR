@@ -13,8 +13,12 @@ import java.util.Optional;
 public class NumberGeneratorConfiguration {
 
     @Bean
-    DrawDateFacade drawDateFacade(){
-        return new DrawDateFacade(new DrawDateGenerator(Clock.systemUTC()));
+    Clock clock(){
+        return Clock.systemUTC();
+    }
+    @Bean
+    DrawDateFacade drawDateFacade(Clock clock){
+        return new DrawDateFacade(new DrawDateGenerator(clock));
     }
 
     @Bean
