@@ -10,8 +10,9 @@ class NumberValidator {
     private static final int MAXIMUN_NUMBER = 99;
     private static final int QUANTITY_OF_NUMBERS_FROM_USER = 6;
 
-    List<ValidationResult> errors = new LinkedList<>();
+    List<ValidationResult> errors;
     List<ValidationResult> validate(Set<Integer> numbersFromUser){
+        errors = new LinkedList<>();
         if(!isCorrectNumbersSize(numbersFromUser)){
             errors.add(ValidationResult.WRONG_QUANTITY_OF_NUMBERS);
         }
