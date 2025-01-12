@@ -13,9 +13,9 @@ import pl.lotto.domain.resultannouncer.dto.ResultAnnouncerResponseDto;
 public class ResultAnnouncerRestController {
     private final ResultAnnouncerFacade resultAnnouncerFacade;
 
-    @GetMapping("/results/{id}")
-    public ResponseEntity<ResultAnnouncerResponseDto> checkResultsById(@PathVariable String id){
-        ResultAnnouncerResponseDto resultAnnouncerResponseDto = resultAnnouncerFacade.checkResult(id);
+    @GetMapping("/results/{hash}")
+    public ResponseEntity<ResultAnnouncerResponseDto> checkResultsById(@PathVariable String hash){
+        ResultAnnouncerResponseDto resultAnnouncerResponseDto = resultAnnouncerFacade.checkResult(hash);
         return ResponseEntity.ok(resultAnnouncerResponseDto);
     }
 }

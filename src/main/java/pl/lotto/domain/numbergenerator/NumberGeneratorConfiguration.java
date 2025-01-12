@@ -16,6 +16,7 @@ public class NumberGeneratorConfiguration {
     Clock clock(){
         return Clock.systemUTC();
     }
+
     @Bean
     DrawDateFacade drawDateFacade(Clock clock){
         return new DrawDateFacade(new DrawDateGenerator(clock));

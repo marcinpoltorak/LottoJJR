@@ -22,26 +22,6 @@ public class NumberReceiverConfiguration {
         return new HashGenerator();
     }
 
-//    @Bean
-//    TicketRepository ticketRepository(){
-//        return new TicketRepository() {
-//            @Override
-//            public Ticket save(Ticket ticket) {
-//                return null;
-//            }
-//
-//            @Override
-//            public List<Ticket> findAllTicketsByDrawDate(LocalDateTime drawDate) {
-//                return null;
-//            }
-//
-//            @Override
-//            public Ticket findByHash(String hash) {
-//                return null;
-//            }
-//        };
-//    }
-
     @Bean
     NumberReceiverFacade numberReceiverFacade(HashGenerable hashGenerator, Clock clock, TicketRepository ticketRepository){
         NumberValidator numberValidator = new NumberValidator();
