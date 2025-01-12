@@ -10,11 +10,11 @@ spring:
 
 lotto:
   number-generator:
-    lotteryRunOccurrence: "0 0 12 * * 6"
+    lotteryRunOccurrence: "0 55 11 * * 6"
     facade:
       lowerBand: 1
       upperBand: 99
-      count: 6
+      count: 14
     http:
       client:
         config:
@@ -22,3 +22,5 @@ lotto:
           port: 80
           connectionTimeout: 1000
           readTimeout: 1000
+  result-checker:
+    generateResultsRunOccurrence: "0 0 12 * * 6"

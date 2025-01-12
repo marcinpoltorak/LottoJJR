@@ -13,10 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import pl.lotto.domain.numbergenerator.SixRandomNumbersDto;
 import pl.lotto.domain.numbergenerator.WinningNumbersGenerable;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -53,7 +50,7 @@ public class RandomNumberGeneratorRestTemplate implements WinningNumbersGenerabl
             return Collections.emptySet();
         }
         log.info("Success Response Body Returned: " + response);
-        Set<Integer> distinctNumbers = new HashSet<>(numbers);
+        Set<Integer> distinctNumbers = new LinkedHashSet<>(numbers);
         return distinctNumbers.stream().limit(6).collect(Collectors.toSet());
     }
 

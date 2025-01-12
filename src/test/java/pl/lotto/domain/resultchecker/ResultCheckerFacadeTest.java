@@ -50,7 +50,7 @@ class ResultCheckerFacadeTest {
                 )
         );
         // when
-        PlayersDto playersDto = resultCheckerFacade.generateWinners();
+        PlayersDto playersDto = resultCheckerFacade.generateResults();
         // then
         List<ResultDto> results = playersDto.results();
         ResultDto resultDto = ResultDto.builder()
@@ -87,7 +87,7 @@ class ResultCheckerFacadeTest {
                 .winningNumbers(null)
                 .build());
         // when
-        PlayersDto playersDto = resultCheckerFacade.generateWinners();
+        PlayersDto playersDto = resultCheckerFacade.generateResults();
         // then
         String message = playersDto.message();
         assertThat(message).isEqualTo("Winners failed to retrieve");
@@ -101,7 +101,7 @@ class ResultCheckerFacadeTest {
                 .winningNumbers(Collections.emptySet())
                 .build());
         // when
-        PlayersDto playersDto = resultCheckerFacade.generateWinners();
+        PlayersDto playersDto = resultCheckerFacade.generateResults();
         // then
         String message = playersDto.message();
         assertThat(message).isEqualTo("Winners failed to retrieve");
@@ -134,9 +134,9 @@ class ResultCheckerFacadeTest {
                 )
         );
         ResultCheckerFacade resultCheckerFacade = new ResultCheckerConfiguration().createForTest(numberReceiverFacade, winningNumbersGeneratorFacade, playerRepository);
-        resultCheckerFacade.generateWinners();
+        resultCheckerFacade.generateResults();
         // when
-        ResultDto resultDto = resultCheckerFacade.findByHash(hash);
+        ResultDto resultDto = resultCheckerFacade.findById(hash);
         // then
         ResultDto expectedResult = ResultDto.builder()
                 .hash(hash)
