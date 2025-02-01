@@ -17,16 +17,19 @@ import static org.mockito.Mockito.when;
 class WinningNumbersGeneratorFacadeTest {
 
     private final  WinningNumbersRepository winningNumbersRepository = new WinningNumbersRepositoryTestImpl();
+
     DrawDateFacade drawDateFacade = mock(DrawDateFacade.class);
-    private final OneRandomNumberFetcher fetcher = new SecureRandomOneNumberFetcher();
+
     @Test
     void it_should_return_set_of_required_size() {
         // given
         when(drawDateFacade.retrieveNextDrawDate()).thenReturn(LocalDateTime.now());
-        WinningNumbersGenerable generator = new WinningNumbersGenerator(fetcher);
+        WinningNumbersGenerable generator = new WinningNumberGeneratorTestImpl();
         WinningNumbersGeneratorFacade generatorFacade = new NumberGeneratorConfiguration().createForTest(generator, winningNumbersRepository, drawDateFacade);
+
         // when
         WinningNumbersDto winningNumbersDto = generatorFacade.generateWinningNumbers();
+
         // then
         assertThat(winningNumbersDto.getWinningNumbers().size()).isEqualTo(6);
     }
@@ -35,7 +38,7 @@ class WinningNumbersGeneratorFacadeTest {
     void it_should_return_set_of_numbers_in_required_range() {
         // given
         when(drawDateFacade.retrieveNextDrawDate()).thenReturn(LocalDateTime.now());
-        WinningNumbersGenerable generator = new WinningNumbersGenerator(fetcher);
+        WinningNumbersGenerable generator = new WinningNumberGeneratorTestImpl();
         WinningNumbersGeneratorFacade winningNumbersGeneratorFacade = new NumberGeneratorConfiguration().createForTest(generator, winningNumbersRepository, drawDateFacade);
         // when
         WinningNumbersDto winningNumbersDto = winningNumbersGeneratorFacade.generateWinningNumbers();
