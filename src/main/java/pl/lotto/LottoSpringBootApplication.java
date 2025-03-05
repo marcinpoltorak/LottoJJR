@@ -17,9 +17,6 @@ import pl.lotto.infrastructure.numbergenerator.http.RandomNumberGeneratorRestTem
 @EnableMongoRepositories
 public class LottoSpringBootApplication {
 
-    @Autowired
-    TestRepository repository;
-
     public static void main(String[] args){
         SpringApplication.run(LottoSpringBootApplication.class, args);
     }
