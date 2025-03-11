@@ -11,6 +11,7 @@ public record ResultDto(
         LocalDateTime drawDate,
         Set<Integer> numbers,
         Set<Integer> hitNumbers,
+        Set<Integer> wonNumbers,
         boolean isWinner
 ) {
 }

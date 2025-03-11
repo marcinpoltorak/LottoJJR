@@ -14,5 +14,6 @@ public record Player(@Id
                      LocalDateTime drawDate,
                      Set<Integer> numbers,
                      Set<Integer> hitNumbers,
+                     Set<Integer> wonNumbers,
                      boolean isWinner) {
 }

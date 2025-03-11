@@ -44,6 +44,7 @@ public class ResultCheckerFacade {
                 .hash(player.hash())
                 .numbers(player.numbers())
                 .hitNumbers(player.hitNumbers())
+                .wonNumbers(player.wonNumbers())
                 .drawDate(player.drawDate())
                 .isWinner(player.isWinner())
                 .build();
