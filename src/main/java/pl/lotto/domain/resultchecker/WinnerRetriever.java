@@ -8,17 +8,18 @@ public class WinnerRetriever {
     public List<Player> retrieveWinners(List<Ticket> tickets, Set<Integer> winningNumbers){
         return tickets.stream().map(ticket -> {
             Set<Integer> hitNumbers = calculateHits(winningNumbers, ticket);
-            return buildPlayer(ticket, hitNumbers);
+            return buildResult(ticket, hitNumbers, winningNumbers);
         }).toList();
     }
 
-    private Player buildPlayer(Ticket ticket, Set<Integer> hitNumbers) {
+    private Player buildResult(Ticket ticket, Set<Integer> hitNumbers, Set<Integer> winningNumbers) {
         return Player.builder()
                 .hash(ticket.hash())
                 .numbers(ticket.numbers())
                 .hitNumbers(hitNumbers)
                 .drawDate(ticket.drawDate())
                 .isWinner(isWinner(hitNumbers))
+                .wonNumbers(winningNumbers)
                 .build();
     }
 

@@ -57,6 +57,7 @@ class ResultCheckerFacadeTest {
                 .hash("01")
                 .numbers(Set.of(1, 2, 3, 4, 5, 6))
                 .hitNumbers(Set.of(1, 2, 3, 4, 5, 6))
+                .wonNumbers(Set.of(1, 2, 3, 4, 5, 6))
                 .drawDate(drawDate)
                 .isWinner(true)
                 .build();
@@ -64,6 +65,7 @@ class ResultCheckerFacadeTest {
                 .hash("02")
                 .numbers(Set.of(7, 9, 3, 8, 5, 6))
                 .hitNumbers(Set.of(3, 5, 6))
+                .wonNumbers(Set.of(1, 2, 3, 4, 5, 6))
                 .drawDate(drawDate)
                 .isWinner(true)
                 .build();
@@ -71,6 +73,7 @@ class ResultCheckerFacadeTest {
                 .hash("02")
                 .numbers(Set.of(7, 9, 3, 8, 5, 6))
                 .hitNumbers(Set.of(3, 5, 6))
+                .wonNumbers(Set.of(1, 2, 3, 4, 5, 6))
                 .drawDate(drawDate)
                 .isWinner(true)
                 .build();
@@ -111,8 +114,9 @@ class ResultCheckerFacadeTest {
     public void it_should_return_result_with_correct_credentials(){
         // given
         LocalDateTime drawDate = LocalDateTime.of(2024, 2, 24, 12, 0, 0);
+        Set<Integer> winningNumbers = Set.of(1, 2, 3, 4, 5, 6);
         when(winningNumbersGeneratorFacade.generateWinningNumbers()).thenReturn(WinningNumbersDto.builder()
-                .winningNumbers(Set.of(1, 2, 3, 4, 5, 6))
+                .winningNumbers(winningNumbers)
                 .build());
         String hash = "01";
         when(numberReceiverFacade.retrieveAllTicketsByNextDrawDate()).thenReturn(
@@ -142,6 +146,7 @@ class ResultCheckerFacadeTest {
                 .hash(hash)
                 .numbers(Set.of(7, 8, 9, 10, 11, 12))
                 .hitNumbers(Set.of())
+                .wonNumbers(winningNumbers)
                 .drawDate(drawDate)
                 .isWinner(false)
                 .build();
