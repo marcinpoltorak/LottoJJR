@@ -6,8 +6,6 @@ import pl.lotto.domain.drawdate.DrawDateFacade;
 import pl.lotto.domain.drawdate.DrawDateGenerator;
 
 import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Configuration
 public class NumberGeneratorConfiguration {

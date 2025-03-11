@@ -1,14 +1,10 @@
 package pl.lotto;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import pl.lotto.domain.TestRepository;
-import pl.lotto.domain.Ticket;
 import pl.lotto.domain.numbergenerator.WinningNumbersGeneratorFacadeConfigurationProperties;
 import pl.lotto.infrastructure.numbergenerator.http.RandomNumberGeneratorRestTemplateConfigurationProperties;
 
@@ -16,17 +12,9 @@ import pl.lotto.infrastructure.numbergenerator.http.RandomNumberGeneratorRestTem
 @EnableScheduling
 @EnableConfigurationProperties({WinningNumbersGeneratorFacadeConfigurationProperties.class, RandomNumberGeneratorRestTemplateConfigurationProperties.class})
 @EnableMongoRepositories
-public class LottoSpringBootApplication implements CommandLineRunner {
-
-    @Autowired
-    TestRepository repository;
+public class LottoSpringBootApplication {
 
     public static void main(String[] args){
         SpringApplication.run(LottoSpringBootApplication.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        repository.save(new Ticket("tid"));
     }
 }
